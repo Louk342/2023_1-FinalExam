@@ -14,6 +14,22 @@
     padding-bottom: .625rem;
     padding-top: .625rem;
 }
-
-/*
-*/
+.menu{
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    margin: 20px;
+    padding-bottom: .625rem;
+    padding-top: .625rem;
+    float: left;
+    background-color: #33353b;
+}
+.body{
+    box-shadow: 0 0 20px 0 rgba(0,0,0,.15);
+    margin: 20px;
+    padding-bottom: .625rem;
+    padding-top: .625rem;
+    float: left;
+    background-color: #33353b;
+    border-radius: 15px;
+    height: 400px;
+    width: 400px;
+}
