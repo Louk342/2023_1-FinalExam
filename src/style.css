@@ -6,6 +6,7 @@
 }
 .App{
     text-align: center;
+    color:white;
 }
 .header{
     top: 0;
@@ -42,6 +43,13 @@
     min-height: 400px;
     height: 2000px;
     width: 1000px;
+}
+.Event_banner{
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+    max-width: 100%;
+    display: block;
+    margin : 10px 20px;
 }
 h4{
     color: gray;

@@ -5,18 +5,26 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
+import {useState, useEffect } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import './style.css';
 import NotFound from './components/NotFound';
 import Home from './components/Home';
 function App() {
+  const [time, setTime] = useState(new Date());
+    useEffect(() => {
+    const id = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return (() => clearInterval(id))}, []);
   return (
     <div className="App">
       <div className='header'>
         <div className='header_in'>
           <a href='/' margin='0px' padding='0px'><img src={require('./img/mainLogo.png')} style={{ padding: '10px', width: '30px' }} /></a>
-          <a href='/aaa'><h2 style={{ margin: '0px', fontSize: '18px' }}>쪽지</h2></a>
+          <a href='/letter/'><h2 style={{ margin: '0px', fontSize: '18px' }}>쪽지</h2></a>
           <div style={{ marginLeft: 'auto' }} />
+          <span><h3 style={{margin:'0px 10px'}}>현재시각 : {time.toLocaleTimeString()}</h3></span>
           <AccountCircleIcon fontSize='large' sx={{color:'white'}}/>
         </div>
       </div>
