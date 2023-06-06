@@ -1,7 +1,7 @@
 import React from 'react';
-import {useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes} from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -11,18 +11,26 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import './style.css';
 import NotFound from './components/NotFound';
 import Home from './components/Home';
+import Login from './components/Login';
 function App() {
+
+  const [login,setLogin]=useState(false);
+
   const scrollToTop = () => {
     window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    })}
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
   const [time, setTime] = useState(new Date());
-    useEffect(() => {
+  useEffect(() => {
     const id = setInterval(() => {
       setTime(new Date());
     }, 1000);
-    return (() => clearInterval(id))}, []);
+    return (() => clearInterval(id))
+  }, []);
+
   return (
     <div className="App">
       <header>
@@ -30,8 +38,8 @@ function App() {
           <a href='/' margin='0px' padding='0px'><img src={require('./img/mainLogo.png')} style={{ padding: '10px', width: '30px' }} /></a>
           <a href='/letter/'><h2 style={{ margin: '0px', fontSize: '18px' }}>쪽지</h2></a>
           <div style={{ marginLeft: 'auto' }} />
-          <span><h3 style={{margin:'0px 10px'}}>현재시각 : {time.toLocaleTimeString()}</h3></span>
-          <IconButton><AccountCircleIcon fontSize='large' sx={{color:'white'}}/></IconButton>
+          <span><h3 style={{ margin: '0px 10px' }}>현재시각 : {time.toLocaleTimeString()}</h3></span>
+          <IconButton><AccountCircleIcon fontSize='large' sx={{ color: 'white' }} /></IconButton>
         </div>
       </header>
       <div className='main'>
@@ -60,15 +68,16 @@ function App() {
         </div>
         <div className='body'>
           <BrowserRouter><Routes>
-            <Route path='/' element={<Home/>}/>
-            <Route path="*" element={<NotFound/>}/>
+            <Route path='/' element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path='/login' element={<Login/>}/>
           </Routes></BrowserRouter>
         </div>
       </div>
       <footer>
         <div>© 2023, Coded by Louk</div>
       </footer>
-      <div className='StT'><IconButton onClick={scrollToTop}><ArrowUpwardIcon/></IconButton></div>
+      <div className='StT'><IconButton  onClick={scrollToTop}><ArrowUpwardIcon /></IconButton></div>
     </div>
   );
 }
