@@ -1,13 +1,15 @@
 import React from 'react';
+
 import '../style.css'
 function Home() {
     return (
         <div>
             <div style={{maxWidth: '960px'}}><img className='Event_banner' src='https://slaimuda.github.io/ectl/static/media/confluence-of-nothingness.827775f871c90c68fa4a.jpg'/></div>
             <div>
-                23.06.08 - 23.06.29<br/>
-                <p style={{color:'gray',margin:'10px 0px 0px 0px'}}>이벤트 종료까지</p>
-                <h1 style={{margin:'0px'}}><span>222:05:14</span></h1>
+                <h4>이벤트기간</h4>
+                <h2>23.06.08 - 23.06.29</h2>
+                {/* <p style={{color:'gray',margin:'10px 0px 0px 0px'}}>이벤트 종료까지</p>
+                <h1 style={{margin:'0px'}}><span>{time.toLocaleTimeString()}</span></h1> */}
             </div>
             <div style={{margin:'20px'}}>
                 <a style={{display:'inline-block'}} href='https://www.facebook.com/AzurLaneEN/'>

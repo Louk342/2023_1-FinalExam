@@ -1,16 +1,22 @@
 import React from 'react';
+import {useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
-import {useState, useEffect } from 'react';
+import IconButton from '@mui/material/IconButton';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import './style.css';
 import NotFound from './components/NotFound';
 import Home from './components/Home';
 function App() {
+  const scrollToTop = () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    })}
   const [time, setTime] = useState(new Date());
     useEffect(() => {
     const id = setInterval(() => {
@@ -19,15 +25,15 @@ function App() {
     return (() => clearInterval(id))}, []);
   return (
     <div className="App">
-      <div className='header'>
+      <header>
         <div className='header_in'>
           <a href='/' margin='0px' padding='0px'><img src={require('./img/mainLogo.png')} style={{ padding: '10px', width: '30px' }} /></a>
           <a href='/letter/'><h2 style={{ margin: '0px', fontSize: '18px' }}>쪽지</h2></a>
           <div style={{ marginLeft: 'auto' }} />
           <span><h3 style={{margin:'0px 10px'}}>현재시각 : {time.toLocaleTimeString()}</h3></span>
-          <AccountCircleIcon fontSize='large' sx={{color:'white'}}/>
+          <IconButton><AccountCircleIcon fontSize='large' sx={{color:'white'}}/></IconButton>
         </div>
-      </div>
+      </header>
       <div className='main'>
         <div>
           <List sx={{ width: 200, color: 'white', bgcolor: '#33353b', padding: '2px', borderRadius: '15px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)' }}>
@@ -59,6 +65,10 @@ function App() {
           </Routes></BrowserRouter>
         </div>
       </div>
+      <footer>
+        <div>© 2023, Coded by Louk</div>
+      </footer>
+      <div className='StT'><IconButton onClick={scrollToTop}><ArrowUpwardIcon/></IconButton></div>
     </div>
   );
 }
