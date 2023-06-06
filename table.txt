@@ -1,0 +1,19 @@
+user
+id,닉네임,이메일,가입날짜,비밀번호,등급,경고카운트
+
+게시글
+id,제목,작성일,수정일,글쓴이,조회수,좋아요,싫어요
+
+댓글
+id,게시글,작성자
+
+등급
+text, country, tier
+
+카테고리
+id 카테고리명
+
+문서화된 게시글
+id 카테고리명 제목 작성일 수정일
+
+//insert into user values(1,"Louk","kimjaeho342@gmail.com",SYSDATE(),"@Kim9077865",1,1);

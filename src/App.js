@@ -14,8 +14,6 @@ import Home from './components/Home';
 import Login from './components/Login';
 function App() {
 
-  const [login,setLogin]=useState(false);
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
