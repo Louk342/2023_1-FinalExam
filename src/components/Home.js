@@ -9,7 +9,7 @@ function Home() {
                 <p style={{color:'gray',margin:'10px 0px 0px 0px'}}>이벤트 종료까지</p>
                 <h1 style={{margin:'0px'}}><span>222:05:14</span></h1>
             </div>
-            <div style={{textAlign:'center'}}>
+            <div style={{margin:'20px'}}>
                 <a style={{display:'inline-block'}} href='https://www.facebook.com/AzurLaneEN/'>
                     <img src='https://webusstatic.yo-star.com/blhx_us_web/pc/static/facebook.27e4d4f.png'/>
                     <div>facebook</div>
