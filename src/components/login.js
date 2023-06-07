@@ -2,10 +2,12 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 function Login(){
     let [inputID,setInputID]=useState();
     let [inputPW,setInputPW]=useState();
-
+    const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
     return (
         <div style={{color:'white'}}>
             <div style={{borderRadius:'30px',backgroundColor:'#999999',width:'500px',margin:'100px auto',padding:'20px',height:'500px',boxShadow:' 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19)'}}>
@@ -14,8 +16,9 @@ function Login(){
                 <div style={{width:'330px',margin:' 10px auto'}}>
                     <div style={{margin:'10px'}}><TextField fullWidth margin='normal' label="E-mail" variant="filled" inputProps={inputID}/></div>
                     <div style={{margin:'10px'}}><TextField fullWidth margin='normal' type="Password" label="Password" variant="filled" inputProps={inputPW}/></div>
-                    <span style={{margin:'30px'}}><Button variant='contained' sx={{backgroundColor:'#444444'}}>로그인</Button></span>
-                    <span style={{margin:'30px'}}><Button variant='contained' sx={{backgroundColor:'#444444'}}>회원가입</Button></span>
+                    <span><FormControlLabel control={<Checkbox/>} label="자동 로그인"/></span>
+                    <span style={{margin:'5px'}}><Button variant='contained' sx={{backgroundColor:'#444444'}}>로그인</Button></span>
+                    <span style={{margin:'5px'}}><Button variant='contained' sx={{backgroundColor:'#444444'}}>회원가입</Button></span>
                 </div>
             </div>
         </div>
