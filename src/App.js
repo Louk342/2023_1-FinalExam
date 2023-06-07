@@ -8,10 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import './style.css';
-import NotFound from './components/NotFound';
 import Home from './components/Home';
-import Login from './components/Login';
-import Event from './components/event';
+import LoginPage from './components/LoginPage';
+import Event from './components/Event';
 function App() {
 
   const scrollToTop = () => {
@@ -68,8 +67,7 @@ function App() {
           <BrowserRouter><Routes>
             <Route path='/' element={<Home />} />
             <Route path="/*" element={<NotFound />} />
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/register' /* element={<Register/>} *//>
+            <Route path='/login' element={<LoginPage/>}/>
             <Route path='/notice' /* element={<Notice/>} *//>
             <Route path='/ship' /* element={<Ship/>} *//>
             <Route path='/equipment' /* element={<Equipmnet/>} *//>
@@ -93,4 +91,5 @@ function App() {
     </div>
   );
 }
+function NotFound(){return (<div><h1 style={{color:'white'}}>404 NotFound</h1></div>);};
 export default App;
