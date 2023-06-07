@@ -75,6 +75,7 @@ function Login(props) {
 
 
 function Register(props) {
+    const [inputName, setInputName] = useState('');
     const [inputID, setInputID] = useState('');
     const [inputPW, setInputPW] = useState('');
     const [inputPW2, setInputPW2] = useState('');
@@ -83,12 +84,14 @@ function Register(props) {
             <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }} />
             <h1>로그인</h1>
             <div style={{ width: '330px', margin: ' 10px auto' }}>
+                <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="User name" variant="filled" onChange={event => { setInputName(event.target.value); }} /></div>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="E-mail" variant="filled" onChange={event => { setInputID(event.target.value); }} /></div>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' type="Password" label="Password" variant="filled" onChange={event => { setInputPW(event.target.value); }} /></div>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' type="Password" label="Re-Password" variant="filled" onChange={event => { setInputPW2(event.target.value); }} /></div>
                 <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }}
                     onClick={() => {
                         const userData = {
+                            userName:inputName,
                             userId: inputID,
                             userPassword: inputPW,
                             userPassword2: inputPW2,
