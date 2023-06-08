@@ -3,15 +3,20 @@ const session = require('express-session')
 const path = require('path');
 const app = express()
 const port = 3001
+const routes = require('./routes.js');
+
 
 const db = require('./server/db');
 const sessionOption = require('./server/sessionOption');
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
+const { log } = require('console');
 
 app.use(express.static(path.join(__dirname, '/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(routes);
 
 app.listen(port, () => { console.log(`server running on port ${port}`); });
 
@@ -25,17 +30,16 @@ app.use(session({
     saveUninitialized: false
 }))
 
-app.get('/', (req, res) => {
-    req.sendFile(path.join(__dirname, '/build/index.html'));
-})
+console.log(__dirname+'./build');
 
-app.get('/authcheck', (req, res) => {
+app.use(express.static(__dirname + "./build"));
+
+
+
+app.get('/authcheck', (req, res) => {//로그인 한 상태인지
     const sendData = { isLogin: "" };
-    if (req.session.is_logined) {
-        sendData.isLogin = "True"
-    } else {
-        sendData.isLogin = "False"
-    }
+    if (req.session.is_logined) sendData.isLogin = "True"
+    else sendData.isLogin = "False"
     res.send(sendData);
 })
 
@@ -45,17 +49,46 @@ app.get('/logout', function (req, res) {
     });
 });
 
-app.post("/login", (req, res) => { // 데이터 받아서 결과 전송
-    const username = req.body.inputID;
-    const password = req.body.inputPW;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.post("/login", (req, res) => { // 로그인 데이터 받아옴
+    const username = req.body.username;
+    const password = req.body.password;
     const sendData = { isLogin: "" };
+    console.log(req.body);
 
     if (username && password) {             // id와 pw가 입력되었는지 확인
-        db.query('SELECT * FROM user WHERE username = ?', [username], function (error, results, fields) {
+        db.query('SELECT * FROM user WHERE email = ?', [username], function (error, results, fields) {
+            console.log(results);
+            console.log(results[0].password);
             if (error) throw error;
             if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.      
 
-                bcrypt.compare(password, results[0].userchn, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
+                bcrypt.compare(password, results[0].password, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
 
                     if (result === true) {                  // 비밀번호가 일치하면
                         req.session.is_logined = true;      // 세션 정보 갱신
@@ -82,6 +115,27 @@ app.post("/login", (req, res) => { // 데이터 받아서 결과 전송
         res.send(sendData);
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
     const userName = req.body.inputName;
@@ -118,3 +172,7 @@ app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
     }
 
 });
+
+app.get('/', (req, res) => {
+    req.sendFile(__dirname, './build/index.html');
+})

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 function LoginPage(props) {
-    const [mode, setMode] = useState("");
+    const [mode, setMode] = useState("LOGIN");
     useEffect(() => {
         fetch("http://louk342.iptime.org:3001/server")
             .then((res) => res.json())
@@ -49,8 +49,8 @@ function Login(props) {
                 <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }}
                     onClick={() => {
                         const userData = {
-                            userId: inputID,
-                            userPassword: inputPW,
+                            username: inputID,
+                            password: inputPW,
                         };
                         fetch("http://localhost:3001/login", { //auth 주소에서 받을 예정
                             method: "post", // method :통신방법

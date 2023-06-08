@@ -67,7 +67,7 @@ function App() {
           <BrowserRouter><Routes>
             <Route path='/' element={<Home />} />
             <Route path="/*" element={<NotFound />} />
-            <Route path='/login' element={<LoginPage/>}/>
+            <Route path='/loginPage' element={<LoginPage/>}/>
             <Route path='/notice' /* element={<Notice/>} *//>
             <Route path='/ship' /* element={<Ship/>} *//>
             <Route path='/equipment' /* element={<Equipmnet/>} *//>
