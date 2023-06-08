@@ -12,7 +12,6 @@ import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import Event from './components/Event';
 function App() {
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

@@ -2,20 +2,16 @@ const express = require('express')
 const session = require('express-session')
 const path = require('path');
 const app = express()
-const port = 3001
-const routes = require('./routes.js');
-
-
-const db = require('./server/db');
-const sessionOption = require('./server/sessionOption');
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
-const { log } = require('console');
+const port = 3001
+const routes = require('./routes.js');
+const db = require('./server/db');
+const sessionOption = require('./server/sessionOption');
 
 app.use(express.static(path.join(__dirname, '/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use(routes);
 
 app.listen(port, () => { console.log(`server running on port ${port}`); });
@@ -40,6 +36,7 @@ app.get('/authcheck', (req, res) => {//로그인 한 상태인지
     const sendData = { isLogin: "" };
     if (req.session.is_logined) sendData.isLogin = "True"
     else sendData.isLogin = "False"
+    console.log(sendData);
     res.send(sendData);
 })
 
@@ -63,48 +60,40 @@ app.get('/logout', function (req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 app.post("/login", (req, res) => { // 로그인 데이터 받아옴
     const username = req.body.username;
     const password = req.body.password;
     const sendData = { isLogin: "" };
+
     console.log(req.body);
 
     if (username && password) {             // id와 pw가 입력되었는지 확인
         db.query('SELECT * FROM user WHERE email = ?', [username], function (error, results, fields) {
-            console.log(results);
+            console.log(results[0]);
+            console.log(results[0].name);
+            console.log(results[0].email);
             console.log(results[0].password);
+            console.log(password);
             if (error) throw error;
-            if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.      
-
-                bcrypt.compare(password, results[0].password, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
-
-                    if (result === true) {                  // 비밀번호가 일치하면
-                        req.session.is_logined = true;      // 세션 정보 갱신
-                        req.session.nickname = username;
-                        req.session.save(function () {
-                            sendData.isLogin = "True"
+            if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.   
+                bcrypt.hash(results[0].password, 10, function(err, hash) {if (err) { throw (err); } 
+                    bcrypt.compare(password, hash, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
+                        console.log(result);
+                        if (result === true) {                  // 비밀번호가 일치하면
+                            req.session.is_logined = true;      // 세션 정보 갱신
+                            req.session.email = username;
+                            req.session.save(function () {
+                                sendData.isLogin = "True"
+                                res.send(sendData);
+                            });
+                        }
+                        else {                                   // 비밀번호가 다른 경우
+                            sendData.isLogin = "로그인 정보가 일치하지 않습니다."
                             res.send(sendData);
-                        });
-                        db.query(`INSERT INTO logTable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`
-                            , [req.session.nickname, '-', `React 로그인 테스트`], function (error, result) { });
-                    }
-                    else {                                   // 비밀번호가 다른 경우
-                        sendData.isLogin = "로그인 정보가 일치하지 않습니다."
-                        res.send(sendData);
-                    }
-                })
+                        }
+                    })
+              });
+                
             } else {    // db에 해당 아이디가 없는 경우
                 sendData.isLogin = "아이디 정보가 일치하지 않습니다."
                 res.send(sendData);
@@ -115,16 +104,6 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
         res.send(sendData);
     }
 });
-
-
-
-
-
-
-
-
-
-
 
 
 

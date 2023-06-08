@@ -5,14 +5,18 @@ import { useState, useEffect } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 function LoginPage(props) {
+    console.log('1');
     const [mode, setMode] = useState("LOGIN");
     useEffect(() => {
-        fetch("http://louk342.iptime.org:3001/server")
-            .then((res) => res.json())
-            .then((json) => {
-                if (json.isLogin === "True") setMode("WELCOME");
+        console.log('2');
+        fetch("http://localhost:3001/authcheck")
+            .then((res) => res.json()).then((json) => {
+                console.log('3');
+                console.log(json.isLogin);
+                if (json.isLogin == "True") setMode("WELCOME");
                 else setMode("LOGIN");
             });
+            console.log('4');
     }, []);
     let content = null;
     if (mode === "LOGIN") content = <Login setMode={setMode} />
@@ -67,7 +71,7 @@ function Login(props) {
                             );
                     }}
                 >로그인</Button></span>
-                <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }} onClick={() => { props.setMode("SIGNIN"); }}>회원가입</Button></span>
+                <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }} onClick={() => { props.setMode("REGISTER"); }}>회원가입</Button></span>
             </div>
         </div>
     );
