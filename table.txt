@@ -1,6 +1,9 @@
 user
 id,닉네임,이메일,가입날짜,비밀번호,등급,경고카운트
 
+login log
+id time user_id action
+
 게시글
 id,제목,작성일,수정일,글쓴이,조회수,좋아요,싫어요
 
