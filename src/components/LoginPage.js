@@ -7,13 +7,12 @@ import Checkbox from '@mui/material/Checkbox';
 function LoginPage(props) {
     console.log('1');
     const [mode, setMode] = useState("LOGIN");
-    useEffect(() => {
+   useEffect(() => {
         console.log('2');
-        fetch("http://localhost:3001/authcheck")
+        fetch("http://localhost:3001/authcheck",{})
             .then((res) => res.json()).then((json) => {
                 console.log('3');
-                console.log(json.isLogin);
-                if (json.isLogin == "True") setMode("WELCOME");
+                if (json.isLogin === "True") setMode("WELCOME");
                 else setMode("LOGIN");
             });
             console.log('4');
@@ -49,7 +48,6 @@ function Login(props) {
             <div style={{ width: '330px', margin: ' 10px auto' }}>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="E-mail" variant="filled" onChange={event => { setInputID(event.target.value); }} /></div>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' type="Password" label="Password" variant="filled" onChange={event => { setInputPW(event.target.value); }} /></div>
-                <span><FormControlLabel control={<Checkbox />} label="자동 로그인" /></span>
                 <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }}
                     onClick={() => {
                         const userData = {
@@ -58,13 +56,10 @@ function Login(props) {
                         };
                         fetch("http://localhost:3001/login", { //auth 주소에서 받을 예정
                             method: "post", // method :통신방법
-                            headers: {      // headers: API 응답에 대한 정보를 담음
-                                "content-type": "application/json",
-                            },
+                            headers: {      "content-type": "application/json",},    // headers: API 응답에 대한 정보를 담음
                             body: JSON.stringify(userData), //userData라는 객체를 보냄
-                        })
-                            .then((res) => res.json())
-                            .then((json) => {
+                        }).then((res) => res.json()).then((json) => {
+                                console.log('login successed');
                                 if (json.isLogin === "True") props.setMode("WELCOME");
                                 else alert(json.isLogin)
                             }

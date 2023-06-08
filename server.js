@@ -1,5 +1,6 @@
 const express = require('express')
 const session = require('express-session')
+const mysql = require("mysql");
 const path = require('path');
 const app = express()
 const bodyParser = require("body-parser");
@@ -7,7 +8,8 @@ const bcrypt = require('bcrypt');
 const port = 3001
 const routes = require('./routes.js');
 const db = require('./server/db');
-const sessionOption = require('./server/sessionOption');
+const options = require('./server/sessionOption');
+var MySQLStore = require('express-mysql-session')(session);
 
 app.use(express.static(path.join(__dirname, '/build')));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,8 +18,8 @@ app.use(routes);
 
 app.listen(port, () => { console.log(`server running on port ${port}`); });
 
-var MySQLStore = require('express-mysql-session')(session);
-var sessionStore = new MySQLStore(sessionOption);
+
+var sessionStore = new MySQLStore(options);
 app.use(session({
     key: 'session_cookie_name',
     secret: '~',
@@ -26,23 +28,30 @@ app.use(session({
     saveUninitialized: false
 }))
 
+var connection = mysql.createConnection(options); // or mysql.createPool(options);
+sessionStore = new MySQLStore({} /* session store options */, connection);
+
+
 console.log(__dirname+'./build');
 
 app.use(express.static(__dirname + "./build"));
 
 
-
+//여기가 문제 세션으로 데이터 받는건 되는데 이걸 react넘기질 못함
 app.get('/authcheck', (req, res) => {//로그인 한 상태인지
     const sendData = { isLogin: "" };
-    if (req.session.is_logined) sendData.isLogin = "True"
-    else sendData.isLogin = "False"
-    console.log(sendData);
-    res.send(sendData);
+    req.session.save(function () {
+        if (req.session.is_logined) sendData.isLogin = "True"
+        else sendData.isLogin = "False"
+        res.send(sendData);
+    });
 })
 
 app.get('/logout', function (req, res) {
+    console.log('out');
     req.session.destroy(function (err) {
         res.redirect('/');
+        res.send({ isLogin: "False" });
     });
 });
 
@@ -73,14 +82,15 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
             console.log(results[0].name);
             console.log(results[0].email);
             console.log(results[0].password);
-            console.log(password);
+            
             if (error) throw error;
             if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.   
                 bcrypt.hash(results[0].password, 10, function(err, hash) {if (err) { throw (err); } 
                     bcrypt.compare(password, hash, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
-                        console.log(result);
-                        if (result === true) {                  // 비밀번호가 일치하면
+                        if (result === true) {            // 비밀번호가 일치하면
+                            console.log('before : '+req.session.is_logined);
                             req.session.is_logined = true;      // 세션 정보 갱신
+                            console.log('after : '+req.session.is_logined);
                             req.session.email = username;
                             req.session.save(function () {
                                 sendData.isLogin = "True"
