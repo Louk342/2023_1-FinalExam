@@ -50,7 +50,7 @@ function Login(props) {
     return (
         <div style={{ color: 'white' }}>
 
-            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }} />
+            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }} alt='LOGO'/>
             <h1>로그인</h1>
             <div style={{ width: '330px', margin: ' 10px auto' }}>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="E-mail" variant="filled" onChange={event => { setInputID(event.target.value); }} /></div>
@@ -84,7 +84,7 @@ function Register(props) {
     const [inputPW2, setInputPW2] = useState('');
     return (
         <div>
-            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }} />
+            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }}  alt='LOGO'/>
             <h1>로그인</h1>
             <div style={{ width: '330px', margin: ' 10px auto' }}>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="User name" variant="filled" onChange={event => { setInputName(event.target.value); }} /></div>

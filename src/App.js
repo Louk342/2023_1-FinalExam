@@ -31,7 +31,7 @@ function App() {
     <div className="App">
       <header>
         <div className='header_in'>
-          <a href='/' margin='0px' padding='0px'><img src={require('./img/mainLogo.png')} style={{ padding: '10px', width: '30px' }} /></a>
+          <a href='/' margin='0px' padding='0px'><img src={require('./img/mainLogo.png')} style={{ padding: '10px', width: '30px' }} alt='LOGO'/></a>
           <a href='/letter'><h2 style={{ margin: '0px', fontSize: '18px' }}>쪽지</h2></a>
           <div style={{ marginLeft: 'auto' }} />
           <span><h3 style={{ margin: '0px 10px' }}>현재시각 : {time.toLocaleTimeString()}</h3></span>
