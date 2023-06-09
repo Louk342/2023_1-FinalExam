@@ -3,26 +3,35 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 function LoginPage(props) {
-    console.log('1');
     const [mode, setMode] = useState("LOGIN");
-   useEffect(() => {
-        console.log('2');
-        fetch("http://localhost:3001/authcheck",{})
+    useEffect(() => {
+        fetch("http://localhost:3001/authcheck", {
+            method: "post", // method :통신방법
+            headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
+
+        })
             .then((res) => res.json()).then((json) => {
-                console.log('3');
                 if (json.isLogin === "True") setMode("WELCOME");
                 else setMode("LOGIN");
             });
-            console.log('4');
     }, []);
     let content = null;
     if (mode === "LOGIN") content = <Login setMode={setMode} />
     else if (mode === 'REGISTER') content = <Register setMode={setMode} />
     else if (mode === 'WELCOME') {
         content = <>
-            <h2>메인 페이지에 오신 것을 환영합니다</h2>
-            <p>로그인에 성공하셨습니다.</p>
-            <a href="/logout">로그아웃</a>
+            <h2>로그인에 성공하셨습니다</h2>
+            <Button variant='contained' sx={{ backgroundColor: '#444444', margin: '10px' }} href='/'>홈으로</Button>
+            <Button variant='contained' sx={{ backgroundColor: '#444444', margin: '10px' }}
+                onClick={() => {
+                    fetch("http://localhost:3001/logout", { //auth 주소에서 받을 예정
+                        method: "post", // method :통신방법
+                        headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
+                    }).then((res) => res.json()).then((json) => {
+                        if (json.isLogin === "False") props.setMode("LOGIN");
+                    });
+                }}
+            >로그아웃</Button>
         </>
     }
 
@@ -54,14 +63,11 @@ function Login(props) {
                         };
                         fetch("http://localhost:3001/login", { //auth 주소에서 받을 예정
                             method: "post", // method :통신방법
-                            headers: {      "content-type": "application/json",},    // headers: API 응답에 대한 정보를 담음
+                            headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
                             body: JSON.stringify(userData), //userData라는 객체를 보냄
                         }).then((res) => res.json()).then((json) => {
-                                console.log('login successed');
-                                if (json.isLogin === "True") props.setMode("WELCOME");
-                                else alert(json.isLogin)
-                            }
-                            );
+                            if (json.isLogin === "True") props.setMode("WELCOME");
+                        });
                     }}
                 >로그인</Button></span>
                 <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }} onClick={() => { props.setMode("REGISTER"); }}>회원가입</Button></span>
@@ -88,7 +94,7 @@ function Register(props) {
                 <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }}
                     onClick={() => {
                         const userData = {
-                            userName:inputName,
+                            userName: inputName,
                             userId: inputID,
                             userPassword: inputPW,
                             userPassword2: inputPW2,
@@ -102,7 +108,7 @@ function Register(props) {
                         })
                             .then((res) => res.json())
                             .then((json) => {
-                                if (json.isLogin === "True"){
+                                if (json.isLogin === "True") {
                                     alert('회원가입이 완료되었습니다!');
                                     props.setMode("LOGIN");
                                 }

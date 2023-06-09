@@ -38,22 +38,21 @@ app.use(express.static(__dirname + "./build"));
 
 
 //여기가 문제 세션으로 데이터 받는건 되는데 이걸 react넘기질 못함
-app.get('/authcheck', (req, res) => {//로그인 한 상태인지
-    const sendData = { isLogin: "" };
+app.post('/authcheck',(req,res)=>{
+    const sendData = { isLogin: '',name:'' };
     req.session.save(function () {
-        if (req.session.is_logined) sendData.isLogin = "True"
-        else sendData.isLogin = "False"
+        if (req.session.is_logined) sendData.isLogin = "True";
+        else sendData.isLogin = "False";
+        sendData.name=req.session.name;
         res.send(sendData);
     });
 })
 
-app.get('/logout', function (req, res) {
-    console.log('out');
-    req.session.destroy(function (err) {
-        res.redirect('/');
-        res.send({ isLogin: "False" });
-    });
-});
+app.post('/logout',(req,res)=>{
+    req.session.destroy();
+    //여기서 매인페이지로 돌아가거나 loginPage를 갱신해야하는데 리다이렉트론 안됨
+    res.redirect('/loginPage');
+})
 
 
 
