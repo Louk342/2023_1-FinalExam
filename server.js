@@ -38,6 +38,7 @@ app.post('/authcheck',(req,res)=>{
     const sendData = { isLogin: '',name:'' };
     req.session.save(function () {
         if (req.session.is_logined) {
+            console.log(req.session);
             sendData.name=req.session.name;
             sendData.isLogin = "True";
         }else sendData.isLogin = "False";
@@ -74,6 +75,7 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
                             req.session.is_logined = true;      // 세션 정보 갱신
                             console.log('after : '+req.session.is_logined);
                             req.session.email = username;
+                            req.session.name=results[0].name;
                             req.session.save(function () {
                                 sendData.isLogin = "True"
                                 res.send(sendData);
