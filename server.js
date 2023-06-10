@@ -32,8 +32,6 @@ var connection = mysql.createConnection(options); // or mysql.createPool(options
 sessionStore = new MySQLStore({} /* session store options */, connection);
 
 
-console.log(__dirname+'./build');
-
 app.use(express.static(__dirname + "./build"));
 
 app.post('/authcheck',(req,res)=>{
@@ -52,20 +50,6 @@ app.post('/logout',(req,res)=>{
     //여기서 매인페이지로 돌아가거나 loginPage를 갱신해야하는데 리다이렉트론 안됨
     res.redirect('/loginPage');
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.post("/login", (req, res) => { // 로그인 데이터 받아옴
     const username = req.body.username;
@@ -113,17 +97,6 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
 app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
     const userName = req.body.inputName;
     const userID = req.body.inputID;
@@ -163,3 +136,12 @@ app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
 app.get('/', (req, res) => {
     req.sendFile(__dirname, './build/index.html');
 })
+
+app.post("/getBoard", (req, res) => {
+    var sendData = null;
+    const sqlQuery = "SELECT * FROM page;";
+    db.query(sqlQuery, (err, result) => {
+        sendData=result;
+        res.send(sendData);
+    });
+  });

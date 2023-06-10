@@ -11,6 +11,8 @@ import './style.css';
 import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import Event from './components/Event';
+import Board from './components/board';
+import Write from './components/Write';
 function App(props) {
   const [mode, setMode] = useState('');
   const [name, setName] = useState('');
@@ -91,10 +93,11 @@ function App(props) {
             <Route path='/event' element={<Event />} />
             <Route path='/update' /* element={<Update/>} */ />
             <Route path='/site' /* element={<Site/>} */ />
-            <Route path='/free-board' /* element={<FreeBoard/>} */ />
+            <Route path='/free-board' element={<Board category={'free'}/>} />
             <Route path='/consider-page' /* element={<ConsiderPage/>} */ />
-            <Route path='/clan-board' /* element={<ClanBoard/>} */ />
-            <Route path='/tip-board' /* element={<TipBoard/>} */ />
+            <Route path='/clan-board' element={<Board category={'clan'}/>} />
+            <Route path='/tip-board' element={<Board category={'tip'}/>} />
+            <Route path='/write' element={<Write/>} />
           </Routes></BrowserRouter>
         </div>
       </div>
