@@ -36,14 +36,13 @@ console.log(__dirname+'./build');
 
 app.use(express.static(__dirname + "./build"));
 
-
-//여기가 문제 세션으로 데이터 받는건 되는데 이걸 react넘기질 못함
 app.post('/authcheck',(req,res)=>{
     const sendData = { isLogin: '',name:'' };
     req.session.save(function () {
-        if (req.session.is_logined) sendData.isLogin = "True";
-        else sendData.isLogin = "False";
-        sendData.name=req.session.name;
+        if (req.session.is_logined) {
+            sendData.name=req.session.name;
+            sendData.isLogin = "True";
+        }else sendData.isLogin = "False";
         res.send(sendData);
     });
 })

@@ -11,7 +11,21 @@ import './style.css';
 import Home from './components/Home';
 import LoginPage from './components/LoginPage';
 import Event from './components/Event';
-function App() {
+function App(props) {
+  const [mode, setMode] = useState('');
+  const [name, setName] = useState('');
+  const [view, setView] = useState(false);
+  fetch("http://localhost:3001/authcheck", {
+    method: "post", // method :통신방법
+    headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
+  })
+    .then((res) => res.json()).then((json) => {
+      if (json.isLogin === "True") {
+        setMode("WELCOME");
+        setName(json.name);
+      } else setMode("LOGIN");
+    });
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -31,11 +45,12 @@ function App() {
     <div className="App">
       <header>
         <div className='header_in'>
-          <a href='/' margin='0px' padding='0px'><img src={require('./img/mainLogo.png')} style={{ padding: '10px', width: '30px' }} alt='LOGO'/></a>
+          <a href='/' margin='0px' padding='0px'><img src={require('./img/mainLogo.png')} style={{ padding: '10px', width: '30px' }} alt='LOGO' /></a>
           <a href='/letter'><h2 style={{ margin: '0px', fontSize: '18px' }}>쪽지</h2></a>
           <div style={{ marginLeft: 'auto' }} />
           <span><h3 style={{ margin: '0px 10px' }}>현재시각 : {time.toLocaleTimeString()}</h3></span>
-          <IconButton><AccountCircleIcon fontSize='large' sx={{ color: 'white' }} /></IconButton>
+          <IconButton onClick={() => { setView(!view) }} ><AccountCircleIcon fontSize='large' sx={{ color: 'white' }} /></IconButton>
+          {view && <DropMenu name={name} mode={mode} />}
         </div>
       </header>
       <div className='main'>
@@ -66,29 +81,51 @@ function App() {
           <BrowserRouter><Routes>
             <Route path='/' element={<Home />} />
             <Route path="/*" element={<NotFound />} />
-            <Route path='/loginPage' element={<LoginPage/>}/>
-            <Route path='/notice' /* element={<Notice/>} *//>
-            <Route path='/ship' /* element={<Ship/>} *//>
-            <Route path='/equipment' /* element={<Equipmnet/>} *//>
-            <Route path='/skin' /* element={<Skin/>} *//>
-            <Route path='/stage' /* element={<Stage/>} *//>
-            <Route path='/big-stage' /* element={<BigStage/>} *//>
-            <Route path='/event' element={<Event/>}/>
-            <Route path='/update' /* element={<Update/>} *//>
-            <Route path='/site' /* element={<Site/>} *//>
-            <Route path='/free-board' /* element={<FreeBoard/>} *//>
-            <Route path='/consider-page' /* element={<ConsiderPage/>} *//>
-            <Route path='/clan-board' /* element={<ClanBoard/>} *//>
-            <Route path='/tip-board' /* element={<TipBoard/>} *//>
+            <Route path='/loginPage' element={<LoginPage />} />
+            <Route path='/notice' /* element={<Notice/>} */ />
+            <Route path='/ship' /* element={<Ship/>} */ />
+            <Route path='/equipment' /* element={<Equipmnet/>} */ />
+            <Route path='/skin' /* element={<Skin/>} */ />
+            <Route path='/stage' /* element={<Stage/>} */ />
+            <Route path='/big-stage' /* element={<BigStage/>} */ />
+            <Route path='/event' element={<Event />} />
+            <Route path='/update' /* element={<Update/>} */ />
+            <Route path='/site' /* element={<Site/>} */ />
+            <Route path='/free-board' /* element={<FreeBoard/>} */ />
+            <Route path='/consider-page' /* element={<ConsiderPage/>} */ />
+            <Route path='/clan-board' /* element={<ClanBoard/>} */ />
+            <Route path='/tip-board' /* element={<TipBoard/>} */ />
           </Routes></BrowserRouter>
         </div>
       </div>
       <footer>
         <div>© 2023, Coded by Louk</div>
       </footer>
-      <div className='StT'><IconButton  onClick={scrollToTop}><ArrowUpwardIcon /></IconButton></div>
+      <div className='StT'><IconButton onClick={scrollToTop}><ArrowUpwardIcon /></IconButton></div>
     </div>
   );
 }
-function NotFound(){return (<div><h1 style={{color:'white'}}>404 NotFound</h1></div>);};
+function NotFound() { return (<div><h1 style={{ color: 'white' }}>404 NotFound</h1></div>); };
+
+function DropMenu(props) {
+  let content = null;
+  if (props.mode == 'WELCOME') {
+    content = 
+    <List sx={{ color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto',position:'absolute', zIndex:'5'}}>
+      <ListItemButton sx={{display:'inline'}} href='/profile' ><ListItemText primary={props.name} /></ListItemButton>
+      <ListItemButton sx={{display:'inline'}} onClick={() => {
+        fetch("http://localhost:3001/logout", { //auth 주소에서 받을 예정
+          method: "post", // method :통신방법
+          headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
+        }).then((res) => res.json()).then((json) => {});
+      }}><ListItemText primary="로그아웃" /></ListItemButton>
+    </List>
+  } else {
+    content = 
+    <List sx={{ color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto',position:'absolute',zIndex:'5'}}>
+      <ListItemButton href='/loginPage'><ListItemText primary='로그인' /></ListItemButton>
+    </List> 
+  }
+  return (<div>{content}</div>);
+}
 export default App;

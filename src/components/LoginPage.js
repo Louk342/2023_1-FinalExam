@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 function LoginPage(props) {
-    const [mode, setMode] = useState("LOGIN");
+    const [mode, setMode] = useState("");
     useEffect(() => {
         fetch("http://localhost:3001/authcheck", {
             method: "post", // method :통신방법
@@ -28,7 +28,10 @@ function LoginPage(props) {
                         method: "post", // method :통신방법
                         headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
                     }).then((res) => res.json()).then((json) => {
-                        if (json.isLogin === "False") props.setMode("LOGIN");
+                        if (json.isLogin === "False") {
+                            props.setMode("LOGIN");
+                            setMode('LOGIN');
+                        }
                     });
                 }}
             >로그아웃</Button>
