@@ -38,7 +38,6 @@ app.post('/authcheck',(req,res)=>{
     const sendData = { isLogin: '',name:'' };
     req.session.save(function () {
         if (req.session.is_logined) {
-            console.log(req.session);
             sendData.name=req.session.name;
             sendData.isLogin = "True";
         }else sendData.isLogin = "False";
@@ -57,7 +56,6 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
     const password = req.body.password;
     const sendData = { isLogin: "" };
 
-    console.log(req.body);
 
     if (username && password) {             // id와 pw가 입력되었는지 확인
         db.query('SELECT * FROM user WHERE email = ?', [username], function (error, results, fields) {
@@ -71,9 +69,7 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
                 bcrypt.hash(results[0].password, 10, function(err, hash) {if (err) { throw (err); } 
                     bcrypt.compare(password, hash, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
                         if (result === true) {            // 비밀번호가 일치하면
-                            console.log('before : '+req.session.is_logined);
                             req.session.is_logined = true;      // 세션 정보 갱신
-                            console.log('after : '+req.session.is_logined);
                             req.session.email = username;
                             req.session.name=results[0].name;
                             req.session.save(function () {

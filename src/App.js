@@ -25,7 +25,6 @@ function App(props) {
       if (json.isLogin === "True") {
         setMode("WELCOME");
         setName(json.name);
-        console.log(json.name);
       } else setMode("LOGIN");
     });
 

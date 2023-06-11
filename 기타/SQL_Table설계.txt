@@ -1,9 +1,12 @@
 user
 id,name,email,joinDate,password,grade,count
 //insert into user(name,email,joinDate,password) values("Louk","kimjaeho342@gmail.com",SYSDATE(),"@Kim9077865");
+
 게시글
-id.title,content,writer,createDate,changeDate,likeC,htaeC
+id.title,content,writer,createDate,changeDate,likeC,htaeC,category
+*카테고리 1자유게시판 2클랜게시판 3공략게시판
 //insert into page(title,content,writer) values("테스트용 제목","테스토용 내용","Louk");
+
 댓글
 id,pageId,content,writer,createTime
 

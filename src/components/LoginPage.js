@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 function LoginPage(props) {
-    const [mode, setMode] = useState("");
+    const [mode, setMode] = useState("LOGIN");
     useEffect(() => {
         fetch("http://localhost:3001/authcheck", {
             method: "post", // method :통신방법
