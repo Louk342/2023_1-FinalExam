@@ -17,7 +17,7 @@ function App(props) {
   const [mode, setMode] = useState('');
   const [name, setName] = useState('');
   const [view, setView] = useState(false);
-  fetch("http://localhost:3001/authcheck", {
+  fetch("http://louk342.iptime.org:3001/authcheck", {
     method: "post", // method :통신방법
     headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
   })
@@ -117,7 +117,7 @@ function DropMenu(props) {
     <List sx={{ color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto',position:'absolute', zIndex:'5'}}>
       <ListItemButton sx={{display:'inline'}} href='/profile' ><ListItemText primary={props.name} /></ListItemButton>
       <ListItemButton sx={{display:'inline'}} onClick={() => {
-        fetch("http://localhost:3001/logout", { //auth 주소에서 받을 예정
+        fetch("http://louk342.iptime.org:3001/logout", { //auth 주소에서 받을 예정
           method: "post", // method :통신방법
           headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
         }).then((res) => res.json()).then((json) => {});

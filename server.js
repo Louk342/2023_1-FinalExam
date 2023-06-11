@@ -136,17 +136,32 @@ app.get('/', (req, res) => {
 })
 
 app.post("/getBoard", (req, res) => {
-    var sendData = null;
     db.query('SELECT * FROM page;', (err, result) => {
-        sendData = result;
-        res.send(sendData);
+        res.send(result);
     });
 });
 
 app.post("/createBoard", (req, res) => {
-    var sendData = null;
-    db.query('insert into page(title,content,writer) values(?,?,?)', (err, result) => {
-        sendData = result;
+    const category=req.body.pageCategory;
+    const title=req.body.pageTitle;
+    const content=req.body.pageContent;
+    const sendData={send:''};
+    const name=req.session.name;
+    if(!category){
+        sendData.send='카테고리를 지정해 주세요';
+        res.send(sendData);
+    }
+    if(!title){
+        sendData.send='제목을 입력해 주세요';
+        res.send(sendData);
+    }
+    if(!content){
+        sendData.send='내용을 입력해 주세요';
+        res.send(sendData);
+    }
+    db.query('insert into page(title,content,category,writer) values(?,?,?,?)',[title, content, category,name], function (error, result) {
+        if (error) throw error;
+        sendData.complete = true;
         res.send(sendData);
     });
 });
