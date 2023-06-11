@@ -34,18 +34,18 @@ sessionStore = new MySQLStore({} /* session store options */, connection);
 
 app.use(express.static(__dirname + "./build"));
 
-app.post('/authcheck',(req,res)=>{
-    const sendData = { isLogin: '',name:'' };
+app.post('/authcheck', (req, res) => {
+    const sendData = { isLogin: '', name: '' };
     req.session.save(function () {
         if (req.session.is_logined) {
-            sendData.name=req.session.name;
+            sendData.name = req.session.name;
             sendData.isLogin = "True";
-        }else sendData.isLogin = "False";
+        } else sendData.isLogin = "False";
         res.send(sendData);
     });
 })
 
-app.post('/logout',(req,res)=>{
+app.post('/logout', (req, res) => {
     req.session.destroy();
     //여기서 매인페이지로 돌아가거나 loginPage를 갱신해야하는데 리다이렉트론 안됨
     res.redirect('/loginPage');
@@ -63,15 +63,16 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
             console.log(results[0].name);
             console.log(results[0].email);
             console.log(results[0].password);
-            
+
             if (error) throw error;
             if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.   
-                bcrypt.hash(results[0].password, 10, function(err, hash) {if (err) { throw (err); } 
+                bcrypt.hash(results[0].password, 10, function (err, hash) {
+                    if (err) { throw (err); }
                     bcrypt.compare(password, hash, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
                         if (result === true) {            // 비밀번호가 일치하면
                             req.session.is_logined = true;      // 세션 정보 갱신
                             req.session.email = username;
-                            req.session.name=results[0].name;
+                            req.session.name = results[0].name;
                             req.session.save(function () {
                                 sendData.isLogin = "True"
                                 res.send(sendData);
@@ -82,8 +83,8 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
                             res.send(sendData);
                         }
                     })
-              });
-                
+                });
+
             } else {    // db에 해당 아이디가 없는 경우
                 sendData.isLogin = "아이디 정보가 일치하지 않습니다."
                 res.send(sendData);
@@ -96,19 +97,18 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
 });
 
 app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
-    const userName = req.body.inputName;
-    const userID = req.body.inputID;
-    const password = req.body.inputPW;
-    const password2 = req.body.inputPW2;
+    const userName = req.body.userName;
+    const userEmail = req.body.userEmail;
+    const password = req.body.userPassword;
+    const password2 = req.body.userPassword2;
 
     const sendData = { isSuccess: "" };
 
-    if (userName && userID && password && password2) {
-        db.query('SELECT * FROM user WHERE email = ?', [userID], function (error, results, fields) { // DB에 같은 이름의 회원아이디가 있는지 확인
+    if (userName && userEmail && password && password2) {
+        db.query('SELECT * FROM user WHERE email = ?', [userEmail], function (error, results, fields) { // DB에 같은 이름의 회원아이디가 있는지 확인
             if (error) throw error;
-            if (results.length <= 0 && password == password2) {         // DB에 같은 이름의 회원아이디가 없고, 비밀번호가 올바르게 입력된 경우
-                const hasedPassword = bcrypt.hashSync(password, 10);    // 입력된 비밀번호를 해시한 값
-                db.query('insert into user values(?,?,SYSDATE(),?,1,1);', [userName, userID, hasedPassword], function (error, data) {
+            if (results.length <= 0 && password == password2) {         // DB에 같은 이름의 회원아이디가 없고, 비밀번호가 올바르게 입력된 경우    // 입력된 비밀번호를 해시한 값
+                db.query('insert into user(name,email,joinDate,password) values(?,?,SYSDATE(),?)', [userName, userEmail, password], function (error, data) {
                     if (error) throw error;
                     req.session.save(function () {
                         sendData.isSuccess = "True"
@@ -137,9 +137,16 @@ app.get('/', (req, res) => {
 
 app.post("/getBoard", (req, res) => {
     var sendData = null;
-    const sqlQuery = "SELECT * FROM page;";
-    db.query(sqlQuery, (err, result) => {
-        sendData=result;
+    db.query('SELECT * FROM page;', (err, result) => {
+        sendData = result;
         res.send(sendData);
     });
-  });
+});
+
+app.post("/createBoard", (req, res) => {
+    var sendData = null;
+    db.query('insert into page(title,content,writer) values(?,?,?)', (err, result) => {
+        sendData = result;
+        res.send(sendData);
+    });
+});

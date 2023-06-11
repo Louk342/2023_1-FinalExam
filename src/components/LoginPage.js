@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState, useEffect } from 'react';
 function LoginPage(props) {
-    const [mode, setMode] = useState("LOGIN");
+    const [mode, setMode] = useState("");
     useEffect(() => {
         fetch("http://localhost:3001/authcheck", {
             method: "post", // method :통신방법
@@ -39,7 +39,7 @@ function LoginPage(props) {
     }
 
     return (
-        <div style={{borderRadius: '30px',backgroundColor: '#999999', width: '500px', margin: '100px auto', padding: '20px', height: '500px', boxShadow: ' 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19)' }}>
+        <div style={{borderRadius: '30px',backgroundColor: '#999999', width: '500px', margin: '100px auto', padding: '20px', boxShadow: ' 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19)' }}>
             {content}
         </div>
     );
@@ -82,7 +82,7 @@ function Login(props) {
 
 function Register(props) {
     const [inputName, setInputName] = useState('');
-    const [inputID, setInputID] = useState('');
+    const [inputEmail, setInputEmail] = useState('');
     const [inputPW, setInputPW] = useState('');
     const [inputPW2, setInputPW2] = useState('');
     return (
@@ -90,15 +90,15 @@ function Register(props) {
             <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }}  alt='LOGO'/>
             <h1>로그인</h1>
             <div style={{ width: '330px', margin: ' 10px auto' }}>
-                <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="User name" variant="filled" onChange={event => { setInputName(event.target.value); }} /></div>
-                <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="E-mail" variant="filled" onChange={event => { setInputID(event.target.value); }} /></div>
-                <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' type="Password" label="Password" variant="filled" onChange={event => { setInputPW(event.target.value); }} /></div>
-                <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' type="Password" label="Re-Password" variant="filled" onChange={event => { setInputPW2(event.target.value); }} /></div>
+                <div style={{ margin: '1px' }}><TextField fullWidth margin='normal' label="User name" variant="filled" onChange={event => { setInputName(event.target.value); }} /></div>
+                <div style={{ margin: '1px' }}><TextField fullWidth margin='normal' label="E-mail" variant="filled" onChange={event => { setInputEmail(event.target.value); }} /></div>
+                <div style={{ margin: '1px' }}><TextField fullWidth margin='normal' type="Password" label="Password" variant="filled" onChange={event => { setInputPW(event.target.value); }} /></div>
+                <div style={{ margin: '1px' }}><TextField fullWidth margin='normal' type="Password" label="Re-Password" variant="filled" onChange={event => { setInputPW2(event.target.value); }} /></div>
                 <span style={{ margin: '5px' }}><Button variant='contained' sx={{ backgroundColor: '#444444' }}
                     onClick={() => {
                         const userData = {
                             userName: inputName,
-                            userId: inputID,
+                            userEmail: inputEmail,
                             userPassword: inputPW,
                             userPassword2: inputPW2,
                         };
@@ -111,7 +111,8 @@ function Register(props) {
                         })
                             .then((res) => res.json())
                             .then((json) => {
-                                if (json.isLogin === "True") {
+
+                                if (json.isSuccess === "True") {
                                     alert('회원가입이 완료되었습니다!');
                                     props.setMode("LOGIN");
                                 }

@@ -7,7 +7,6 @@ function Board() {
     headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
   })
     .then((res) => res.json()).then((json) => {
-
         for(let content of json){
             //console.log(content.id)
             //console.log(content.title)
@@ -35,7 +34,7 @@ function Board() {
                     <td>작성자</td>
                     <td>작성일</td>
                 </tr>
-                {/* 이 새끼 왜 출력 안함???? */}
+                {/* 얘 왜 출력 안함???? */}
                 {list}
             </table>
             
