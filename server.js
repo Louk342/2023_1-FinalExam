@@ -136,7 +136,9 @@ app.get('/', (req, res) => {
 })
 
 app.post("/getBoard", (req, res) => {
-    db.query('SELECT * FROM page;', (err, result) => {
+    const category = req.body.category;
+    console.log(category)
+    db.query('SELECT * FROM page where category=?',[category], function (error, result) {
         res.send(result);
     });
 });
@@ -163,5 +165,12 @@ app.post("/createBoard", (req, res) => {
         if (error) throw error;
         sendData.complete = true;
         res.send(sendData);
+    });
+});
+
+app.post("/getPage", (req, res) => {
+    const id = req.body.id;
+    db.query('SELECT * FROM page where id=?',[id], function (error, result) {
+        res.send(result);
     });
 });

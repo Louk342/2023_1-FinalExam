@@ -93,10 +93,10 @@ function App(props) {
             <Route path='/event' element={<Event />} />
             <Route path='/update' /* element={<Update/>} */ />
             <Route path='/site' /* element={<Site/>} */ />
-            <Route path='/free-board' element={<Board category={'free'}/>} />
+            <Route path='/free-board' element={<Board category={1}/>} />
             <Route path='/consider-page' /* element={<ConsiderPage/>} */ />
-            <Route path='/clan-board' element={<Board category={'clan'}/>} />
-            <Route path='/tip-board' element={<Board category={'tip'}/>} />
+            <Route path='/clan-board' element={<Board category={2}/>} />
+            <Route path='/tip-board' element={<Board category={3}/>} />
             <Route path='/write' element={<Write/>} />
           </Routes></BrowserRouter>
         </div>
