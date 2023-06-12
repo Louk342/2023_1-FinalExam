@@ -14,7 +14,7 @@ function Board(props) {
             //console.log(content.writer)
             //console.log(content.createDate)
             list.push(
-                <tr onClick={<Page id={content.id}/>}>
+                <tr key={content.id} onClick={<Page id={content.id}/>}>
                     <td>{content.id}</td>
                     <td>{content.title}</td>
                     <td>{content.writer}</td>
@@ -23,6 +23,7 @@ function Board(props) {
             );
         }
     });
+    console.log(list);
     return (
         <div style={{ color: 'white', padding: '20px', margin: '0px' }} >
             <table style={{ width: '100%', textAlign: 'left', border: '4px', borderColor: 'white' }}>
@@ -32,6 +33,7 @@ function Board(props) {
                     <td>작성자</td>
                     <td>작성일</td>
                 </tr>
+                {list}
                 {/* 얘 왜 출력 안됨???? */}
             </table>
             <Button sx={{ backgroundColor: '#444444', margin: '10px', color: 'white' }} onClick={() => {
