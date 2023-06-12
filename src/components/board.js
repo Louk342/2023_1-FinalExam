@@ -2,9 +2,10 @@ import React from 'react';
 import { Button } from '@mui/material';
 import Page from './Page';
 import { useState, useEffect } from 'react';
+
 function Board(props) {
     const [list, setList] = useState([]);
-
+    
     useEffect(() => {
         fetchData();
     }, [props.category]);

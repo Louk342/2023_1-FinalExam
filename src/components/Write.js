@@ -7,7 +7,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { redirect } from 'react-router-dom';
 function Write(props) {
     useEffect(() => {
         fetch("http://louk342.iptime.org/authcheck", {
