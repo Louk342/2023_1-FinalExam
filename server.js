@@ -34,6 +34,10 @@ sessionStore = new MySQLStore({} /* session store options */, connection);
 
 app.use(express.static(__dirname + "./build"));
 
+app.get('/', (req, res) => {
+    req.sendFile(__dirname, './build/index.html');
+})
+
 app.post('/authcheck', (req, res) => {
     const sendData = { isLogin: '', name: '' };
     req.session.save(function () {
@@ -43,12 +47,6 @@ app.post('/authcheck', (req, res) => {
         } else sendData.isLogin = "False";
         res.send(sendData);
     });
-})
-
-app.post('/logout', (req, res) => {
-    req.session.destroy();
-    //여기서 매인페이지로 돌아가거나 loginPage를 갱신해야하는데 리다이렉트론 안됨
-    res.redirect('/loginPage');
 })
 
 app.post("/login", (req, res) => { // 로그인 데이터 받아옴
@@ -96,6 +94,12 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
     }
 });
 
+app.post('/logout', (req, res) => {
+    req.session.destroy();
+    //여기서 매인페이지로 돌아가거나 loginPage를 갱신해야하는데 리다이렉트론 안됨
+    res.redirect('/loginPage');
+})
+
 app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
     const userName = req.body.userName;
     const userEmail = req.body.userEmail;
@@ -130,10 +134,6 @@ app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
     }
 
 });
-
-app.get('/', (req, res) => {
-    req.sendFile(__dirname, './build/index.html');
-})
 
 app.post("/getBoard", (req, res) => {
     const category = req.body.category;

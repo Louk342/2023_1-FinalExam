@@ -1,7 +1,7 @@
 import React from 'react';
-function page(props) {
+function Page(props) {
     let id,title,contents,category,writer;
-    const inputID=null;
+    const inputID=props.id;
     fetch("http://louk342.iptime.org:3001/getPage", {
         method: "post",
         headers: { "content-type": "application/json", },
@@ -26,4 +26,4 @@ function page(props) {
     </>
     return ({content});
 }
-export default page;
+export default Page;
