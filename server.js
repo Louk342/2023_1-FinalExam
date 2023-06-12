@@ -174,3 +174,10 @@ app.post("/getPage", (req, res) => {
         res.send(result);
     });
 });
+
+app.get('/page/:id',(req,res)=>{
+    const ID=req.params.id;
+    db.query('SELECT * FROM page where id=?',[ID], function (error, result) {
+        res.send(result);
+    });
+});
