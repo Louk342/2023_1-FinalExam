@@ -7,6 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { redirect } from 'react-router-dom';
 function Write(props) {
     useEffect(() => {
         fetch("http://louk342.iptime.org/authcheck", {
@@ -60,7 +61,10 @@ function Write(props) {
                             headers: { "content-type": "application/json", },
                             body: JSON.stringify(pageData),    // headers: API 응답에 대한 정보를 담음
                         }).then((res) => res.json()).then((json) => {
-                            if (json.complete) alert('게시물이 게시 되었습니다.');
+                            if (json.complete) {
+                                alert('게시물이 게시 되었습니다.');
+                                window.location.href = "http://louk342.iptime.org/";
+                            }
                         });
                     }}
                 >작성</Button>

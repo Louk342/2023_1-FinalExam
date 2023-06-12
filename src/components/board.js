@@ -1,8 +1,32 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import Page from './Page';
+import { useState, useEffect } from 'react';
 function Board(props) {
-    const list = [];
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+    }, [props.category]);
+
+    const fetchData = async () => {
+        const response = await fetch("http://louk342.iptime.org/getBoard", {
+            method: "post",
+            headers: { "content-type": "application/json", },
+            body: JSON.stringify({ category: props.category }),
+        });
+        const json = await response.json();
+        const newList = json.map((content) => (
+            <tr key={content.id} onClick={<Page id={content.id} />}>
+                <td>{content.id}</td>
+                <td>{content.title}</td>
+                <td>{content.writer}</td>
+                <td>{content.createDate}</td>
+            </tr>
+        ));
+        setList(newList);
+    };
+    /* const list = [];
     fetch("http://louk342.iptime.org/getBoard", {
         method: "post",
         headers: { "content-type": "application/json", },
@@ -22,7 +46,7 @@ function Board(props) {
                 </tr>
             );
         }
-    });
+    }); */
     console.log(list);
     return (
         <div style={{ color: 'white', padding: '20px', margin: '0px' }} >
