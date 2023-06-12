@@ -25,7 +25,6 @@ function App(props) {
         setMode("WELCOME");
         setName(json.name);
       } else setMode("LOGIN");
-      console.log('App : '+json);
     });
 
   const scrollToTop = () => {

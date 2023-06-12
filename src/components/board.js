@@ -2,12 +2,11 @@ import React from 'react';
 import { Button } from '@mui/material';
 import Page from './Page';
 function Board(props) {
-    const DATA = { category: props.category }
-    const list = []
+    const list = [];
     fetch("http://louk342.iptime.org/getBoard", {
         method: "post",
         headers: { "content-type": "application/json", },
-        body: JSON.stringify(DATA),
+        body: JSON.stringify({ category: props.category }),
     }).then((res) => res.json()).then((json) => {
         for (let content of json) {
             //console.log(content.id)
@@ -24,9 +23,6 @@ function Board(props) {
             );
         }
     });
-    console.log(list);
-    console.log(list.length);
-
     return (
         <div style={{ color: 'white', padding: '20px', margin: '0px' }} >
             <table style={{ width: '100%', textAlign: 'left', border: '4px', borderColor: 'white' }}>
@@ -37,7 +33,6 @@ function Board(props) {
                     <td>작성일</td>
                 </tr>
                 {/* 얘 왜 출력 안됨???? */}
-                {list}
             </table>
             <Button sx={{ backgroundColor: '#444444', margin: '10px', color: 'white' }} onClick={() => {
                 fetch("http://louk342.iptime.org/authcheck", {

@@ -138,7 +138,6 @@ app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
 
 app.post("/getBoard", (req, res) => {
     const category = req.body.category;
-    console.log(category)
     db.query('SELECT * FROM page where category=?',[category], function (error, result) {
         res.send(result);
     });
