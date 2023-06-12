@@ -17,15 +17,15 @@ function App(props) {
   const [mode, setMode] = useState('');
   const [name, setName] = useState('');
   const [view, setView] = useState(false);
-  fetch("http://louk342.iptime.org:3001/authcheck", {
+  fetch("http://louk342.iptime.org/authcheck", {
     method: "post", // method :통신방법
     headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
-  })
-    .then((res) => res.json()).then((json) => {
+  }).then((res) => res.json()).then((json) => {
       if (json.isLogin === "True") {
         setMode("WELCOME");
         setName(json.name);
       } else setMode("LOGIN");
+      console.log('App : '+json);
     });
 
   const scrollToTop = () => {
@@ -111,19 +111,20 @@ function App(props) {
 function NotFound() { return (<div><h1 style={{ color: 'white' }}>404 NotFound</h1></div>); };
 
 function DropMenu(props) {
+  console.log(props);
   let content = null;
   if (props.mode == 'WELCOME') {
     content = 
     <List sx={{ color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto',position:'absolute', zIndex:'5'}}>
       <ListItemButton sx={{display:'inline'}} href='/profile' ><ListItemText primary={props.name} /></ListItemButton>
       <ListItemButton sx={{display:'inline'}} onClick={() => {
-        fetch("http://louk342.iptime.org:3001/logout", { //auth 주소에서 받을 예정
+        fetch("http://louk342.iptime.org/logout", { //auth 주소에서 받을 예정
           method: "post", // method :통신방법
           headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
         }).then((res) => res.json()).then((json) => {});
       }}><ListItemText primary="로그아웃" /></ListItemButton>
     </List>
-  } else {
+  } else if (props.mode == 'LOGIN') {
     content = 
     <List sx={{ color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto',position:'absolute',zIndex:'5'}}>
       <ListItemButton href='/loginPage'><ListItemText primary='로그인' /></ListItemButton>

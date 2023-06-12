@@ -5,7 +5,7 @@ const path = require('path');
 const app = express()
 const bodyParser = require("body-parser");
 const bcrypt = require('bcrypt');
-const port = 3001
+const port = 80;
 const routes = require('./routes.js');
 const db = require('./server/db');
 const options = require('./server/sessionOption');
@@ -45,6 +45,7 @@ app.post('/authcheck', (req, res) => {
             sendData.name = req.session.name;
             sendData.isLogin = "True";
         } else sendData.isLogin = "False";
+        console.log(sendData);
         res.send(sendData);
     });
 })

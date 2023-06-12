@@ -4,7 +4,7 @@ import Page from './Page';
 function Board(props) {
     const DATA = { category: props.category }
     const list = []
-    fetch("http://louk342.iptime.org:3001/getBoard", {
+    fetch("http://louk342.iptime.org/getBoard", {
         method: "post",
         headers: { "content-type": "application/json", },
         body: JSON.stringify(DATA),
@@ -40,15 +40,15 @@ function Board(props) {
                 {list}
             </table>
             <Button sx={{ backgroundColor: '#444444', margin: '10px', color: 'white' }} onClick={() => {
-                fetch("http://louk342.iptime.org:3001/authcheck", {
+                fetch("http://louk342.iptime.org/authcheck", {
                     method: "post", // method :통신방법
                     headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
                 })
                     .then((res) => res.json()).then((json) => {
-                        if (json.isLogin === "True") window.location.replace('http://louk342.iptime.org:3001/write');
+                        if (json.isLogin === "True") window.location.replace('http://louk342.iptime.org/write');
                         else {
                             alert('로그인 하신 뒤 사용해 주세요');
-                            window.location.replace('http://louk342.iptime.org:3001/loginPage');
+                            window.location.replace('http://louk342.iptime.org/loginPage');
                         }
                     });
             }}>글쓰기</Button>

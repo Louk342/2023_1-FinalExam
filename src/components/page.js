@@ -2,7 +2,7 @@ import React from 'react';
 function Page(props) {
     let id,title,contents,category,writer;
     const inputID=props.id;
-    fetch("http://louk342.iptime.org:3001/getPage", {
+    fetch("http://louk342.iptime.org/getPage", {
         method: "post",
         headers: { "content-type": "application/json", },
         body: JSON.stringify(inputID),

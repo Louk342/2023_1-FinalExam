@@ -9,7 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 function Write(props) {
     useEffect(() => {
-        fetch("http://louk342.iptime.org:3001/authcheck", {
+        fetch("http://louk342.iptime.org/authcheck", {
             method: "post", // method :통신방법
             headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
         })
@@ -17,7 +17,7 @@ function Write(props) {
                 if (json.isLogin === "True") {}
                 else {
             alert('로그인 하신 뒤 사용해 주세요');
-            window.location.replace('http://louk342.iptime.org:3001/loginPage');
+            window.location.replace('http://louk342.iptime.org/loginPage');
             }});
     }, []);
     const [title, setTitle] = useState();
@@ -55,7 +55,7 @@ function Write(props) {
                             pageCategory: category,
                             pageContent: content,
                         };
-                        fetch("http://louk342.iptime.org:3001/createBoard", {
+                        fetch("http://louk342.iptime.org/createBoard", {
                             method: "post", // method :통신방법
                             headers: { "content-type": "application/json", },
                             body: JSON.stringify(pageData),    // headers: API 응답에 대한 정보를 담음

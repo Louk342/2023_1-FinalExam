@@ -1,19 +1,18 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 function LoginPage(props) {
-    const [mode, setMode] = useState("LOGIN");
-    useEffect(() => {
-        fetch("http://louk342.iptime.org:3001/authcheck", {
-            method: "post", // method :통신방법
-            headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
-        })
-            .then((res) => res.json()).then((json) => {
-                if (json.isLogin === "True") setMode("WELCOME");
-                else setMode("LOGIN");
-            });
-    }, []);
+    const [mode, setMode] = useState("");
+
+    fetch("http://louk342.iptime.org/authcheck", {
+        method: "post", // method :통신방법
+        headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
+    }).then((res) => res.json()).then((json) => {
+            if (json.isLogin === "True") setMode("WELCOME");
+            else setMode("LOGIN");
+    });
+
     let content = null;
     if (mode === "LOGIN") content = <Login setMode={setMode} />
     else if (mode === 'REGISTER') content = <Register setMode={setMode} />
@@ -23,7 +22,7 @@ function LoginPage(props) {
             <Button variant='contained' sx={{ backgroundColor: '#444444', margin: '10px' }} href='/'>홈으로</Button>
             <Button variant='contained' sx={{ backgroundColor: '#444444', margin: '10px' }}
                 onClick={() => {
-                    fetch("http://louk342.iptime.org:3001/logout", { //auth 주소에서 받을 예정
+                    fetch("http://louk342.iptime.org/logout", { //auth 주소에서 받을 예정
                         method: "post", // method :통신방법
                         headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
                     }).then((res) => res.json()).then((json) => {
@@ -63,7 +62,7 @@ function Login(props) {
                             username: inputID,
                             password: inputPW,
                         };
-                        fetch("http://louk342.iptime.org:3001/login", { //auth 주소에서 받을 예정
+                        fetch("http://louk342.iptime.org/login", { //auth 주소에서 받을 예정
                             method: "post", // method :통신방법
                             headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
                             body: JSON.stringify(userData), //userData라는 객체를 보냄
@@ -101,7 +100,7 @@ function Register(props) {
                             userPassword: inputPW,
                             userPassword2: inputPW2,
                         };
-                        fetch("http://louk342.iptime.org:3001/signin", { //signin 주소에서 받을 예정
+                        fetch("http://louk342.iptime.org/signin", { //signin 주소에서 받을 예정
                             method: "post", // method :통신방법
                             headers: {      // headers: API 응답에 대한 정보를 담음
                                 "content-type": "application/json",
