@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from '@mui/material';
-import Page from './Page';
 import { useState, useEffect } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,6 +16,8 @@ function Board(props) {
         fetchData();
     }, [props.category]);
 
+
+
     const fetchData = async () => {
         const response = await fetch("http://louk342.iptime.org/getBoard", {
             method: "post",
@@ -25,7 +26,7 @@ function Board(props) {
         });
         const json = await response.json();
         const newList = json.map((content) => (
-            <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow onClick={{}} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row"></TableCell>
                 <TableCell align="right">{content.id}</TableCell>
                 <TableCell align="right">{content.title}</TableCell>
