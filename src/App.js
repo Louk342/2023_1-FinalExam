@@ -118,7 +118,7 @@ function DropMenu(props) {
   let content = null;
   if (props.mode == 'WELCOME') {
     content = 
-    <List sx={{ display:'block',width:'100px',color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto-100px',position:'absolute', zIndex:'5'}}>
+    <List sx={{ display:'block',color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto-100px',position:'absolute', zIndex:'5'}}>
       <ListItemButton sx={{display:'block'}} href='/profile' ><ListItemText primary={props.name} /></ListItemButton>
       <ListItemButton sx={{display:'block'}} onClick={() => {
         fetch("http://louk342.iptime.org/logout", { //auth 주소에서 받을 예정
@@ -129,7 +129,7 @@ function DropMenu(props) {
     </List>
   } else if (props.mode == 'LOGIN') {
     content = 
-    <List sx={{ display:'block',width:'100px',color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto-100px',position:'absolute',zIndex:'5'}}>
+    <List sx={{ display:'block',color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto-100px',position:'absolute',zIndex:'5'}}>
       <ListItemButton href='/loginPage'><ListItemText primary='로그인' /></ListItemButton>
     </List> 
   }
