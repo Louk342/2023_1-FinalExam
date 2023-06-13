@@ -1,18 +1,18 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 function LoginPage(props) {
     const [mode, setMode] = useState("");
-
-    fetch("http://louk342.iptime.org/authcheck", {
-        method: "post", // method :통신방법
-        headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
-    }).then((res) => res.json()).then((json) => {
+    useEffect(() => {
+        fetch("http://louk342.iptime.org/authcheck", {
+            method: "post", // method :통신방법
+            headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
+        }).then((res) => res.json()).then((json) => {
             if (json.isLogin === "True") setMode("WELCOME");
             else setMode("LOGIN");
-    });
-
+        });
+    }, []);
     let content = null;
     if (mode === "LOGIN") content = <Login setMode={setMode} />
     else if (mode === 'REGISTER') content = <Register setMode={setMode} />
@@ -37,7 +37,7 @@ function LoginPage(props) {
     }
 
     return (
-        <div style={{borderRadius: '30px',backgroundColor: '#999999', width: '500px', margin: '100px auto', padding: '20px', boxShadow: ' 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19)' }}>
+        <div style={{ borderRadius: '30px', backgroundColor: '#999999', width: '500px', margin: '100px auto', padding: '20px', boxShadow: ' 0 4px 8px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19)' }}>
             {content}
         </div>
     );
@@ -49,9 +49,9 @@ function Login(props) {
     let [inputID, setInputID] = useState('');
     let [inputPW, setInputPW] = useState('');
     return (
-        <div style={{ color: 'white'}}>
+        <div style={{ color: 'white' }}>
 
-            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }} alt='LOGO'/>
+            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }} alt='LOGO' />
             <h1>로그인</h1>
             <div style={{ width: '330px', margin: ' 10px auto' }}>
                 <div style={{ margin: '10px' }}><TextField fullWidth margin='normal' label="E-mail" variant="filled" onChange={event => { setInputID(event.target.value); }} /></div>
@@ -85,7 +85,7 @@ function Register(props) {
     const [inputPW2, setInputPW2] = useState('');
     return (
         <div>
-            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }}  alt='LOGO'/>
+            <img src={require('../img/mainLogo.png')} style={{ padding: '10px', width: '100px' }} alt='LOGO' />
             <h1>로그인</h1>
             <div style={{ width: '330px', margin: ' 10px auto' }}>
                 <div style={{ margin: '1px' }}><TextField fullWidth margin='normal' label="User name" variant="filled" onChange={event => { setInputName(event.target.value); }} /></div>
