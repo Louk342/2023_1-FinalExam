@@ -4,7 +4,7 @@ import '../style.css'
 function Page() {
     const [pageData, setPageData] = useState({ title: '', writer: '', category: '', content: '' });
     const { id } = useParams();
-
+    console.log(id);
     useEffect(() => {
         const inputID = {input: id};
 
