@@ -25,7 +25,7 @@ function Board(props) {
         });
         const json = await response.json();
         const newList = json.map((content) => (
-            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row"></TableCell>
                 <TableCell align="right">{content.id}</TableCell>
                 <TableCell align="right">{content.title}</TableCell>
