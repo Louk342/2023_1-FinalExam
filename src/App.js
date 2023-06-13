@@ -63,7 +63,7 @@ function App(props) {
             <ListItemButton href='/notice'><ListItemText primary="공지사항" /></ListItemButton>
             <ListItemButton href='/'><ListItemText primary="인기게시글" /></ListItemButton>
             <ListItemButton href='/'><ListItemText primary="요청사항" /></ListItemButton>
-            <ListItemButton href='/'><ListItemText primary="게임소개" /></ListItemButton>
+            <ListItemButton href='https://azurlane.yo-star.com/'><ListItemText primary="게임소개" /></ListItemButton>
             <h4>정보게시판</h4>
             <ListItemButton href='/ship'><ListItemText primary="함선" /></ListItemButton>
             <ListItemButton href='/equipment'><ListItemText primary="장비" /></ListItemButton>

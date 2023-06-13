@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from "@mui/material";
 
 function Profile(props) {
     const [list, setList] = useState([]);
@@ -29,6 +30,18 @@ function Profile(props) {
                 <TableCell align="right">{content.title}</TableCell>
                 <TableCell align="right">{content.writer}</TableCell>
                 <TableCell align="right">{content.createDate}</TableCell>
+                <TableCell align="right"><Button onClick={() => {
+                    fetch("http://louk342.iptime.org/delete", {
+                        method: "post",
+                        headers: { "content-type": "application/json", },
+                        body: JSON.stringify({ id: content.id }),
+                    }).then((res) => res.json()).then((json) => {
+                        if(json) alert('게시물이 삭제되었습니다');
+                        window.location.reload();
+                    });
+                }}
+
+                >삭제</Button></TableCell>
             </TableRow>
         ));
         setList(newList);

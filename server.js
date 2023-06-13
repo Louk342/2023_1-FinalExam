@@ -45,7 +45,6 @@ app.post('/authcheck', (req, res) => {
             sendData.name = req.session.name;
             sendData.isLogin = "True";
         } else sendData.isLogin = "False";
-        console.log(sendData);
         res.send(sendData);
     });
 })
@@ -58,10 +57,10 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
 
     if (username && password) {             // id와 pw가 입력되었는지 확인
         db.query('SELECT * FROM user WHERE email = ?', [username], function (error, results, fields) {
-            console.log(results[0]);
-            console.log(results[0].name);
-            console.log(results[0].email);
-            console.log(results[0].password);
+            //console.log(results[0]);
+            //console.log(results[0].name);
+            //console.log(results[0].email);
+            //console.log(results[0].password);
 
             if (error) throw error;
             if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.   
@@ -97,7 +96,6 @@ app.post("/login", (req, res) => { // 로그인 데이터 받아옴
 
 app.post('/logout', (req, res) => {
     req.session.destroy();
-    //여기서 매인페이지로 돌아가거나 loginPage를 갱신해야하는데 리다이렉트론 안됨
     res.redirect('/loginPage');
 })
 
@@ -177,10 +175,8 @@ app.post("/getPage", (req, res) => {
 
 app.post("/getProfileBoard", (req, res) => {
     const name = req.body.name;
-    console.log(name);
     db.query('SELECT * FROM page where writer=?',[name], function (error, result) {
         res.send(result);
-        console.log(result);
     });
 });
 
@@ -188,5 +184,12 @@ app.get('/page/:id',(req,res)=>{
     const ID=req.params.id;
     db.query('SELECT * FROM page where id=?',[ID], function (error, result) {
         res.send(result);
+    });
+});
+
+app.post("/delete", (req, res) => {
+    const id = req.body.id;
+    db.query('delete FROM page where id=?',[id], function (error, result) {
+        res.send(true);
     });
 });
