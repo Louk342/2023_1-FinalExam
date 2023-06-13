@@ -100,7 +100,7 @@ function App(props) {
             <Route path='/tip-board' element={<Board category={3}/>} />
             <Route path='/write' element={<Write/>} />
             <Route path='/page' element={<Page />}/>
-            <Route path='/page' element={<Profile name={name} />}/>
+            <Route path='/profile' element={<Profile name={name} />}/>
           </Routes></BrowserRouter>
         </div>
       </div>
