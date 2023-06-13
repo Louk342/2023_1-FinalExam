@@ -2,10 +2,17 @@ import React from 'react';
 import { Button } from '@mui/material';
 import Page from './Page';
 import { useState, useEffect } from 'react';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 function Board(props) {
     const [list, setList] = useState([]);
-    
+
     useEffect(() => {
         fetchData();
     }, [props.category]);
@@ -18,12 +25,13 @@ function Board(props) {
         });
         const json = await response.json();
         const newList = json.map((content) => (
-            <tr key={content.id} onClick={<Page id={content.id} />}>
-                <td>{content.id}</td>
-                <td>{content.title}</td>
-                <td>{content.writer}</td>
-                <td>{content.createDate}</td>
-            </tr>
+            <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell component="th" scope="row"></TableCell>
+                <TableCell align="right">{content.id}</TableCell>
+                <TableCell align="right">{content.title}</TableCell>
+                <TableCell align="right">{content.writer}</TableCell>
+                <TableCell align="right">{content.createDate}</TableCell>
+            </TableRow>
         ));
         setList(newList);
     };
@@ -48,19 +56,38 @@ function Board(props) {
             );
         }
     }); */
+
+
+    /* <table style={{ width: '100%', textAlign: 'left', border: '4px', borderColor: 'white' }}>
+        <tr>
+            <td>번호</td>
+            <td>제목</td>
+            <td>작성자</td>
+            <td>작성일</td>
+        </tr>
+        {list}
+    </table> */
+
+
     console.log(list);
     return (
         <div style={{ color: 'white', padding: '20px', margin: '0px' }} >
-            <table style={{ width: '100%', textAlign: 'left', border: '4px', borderColor: 'white' }}>
-                <tr>
-                    <td>번호</td>
-                    <td>제목</td>
-                    <td>작성자</td>
-                    <td>작성일</td>
-                </tr>
-                {list}
-                {/* 얘 왜 출력 안됨???? */}
-            </table>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell align="right">번호</TableCell>
+                            <TableCell align="right">제목</TableCell>
+                            <TableCell align="right">작성자</TableCell>
+                            <TableCell align="right">작성일</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {list}
+                    </TableBody>
+                </Table>
+            </TableContainer>
             <Button sx={{ backgroundColor: '#444444', margin: '10px', color: 'white' }} onClick={() => {
                 fetch("http://louk342.iptime.org/authcheck", {
                     method: "post", // method :통신방법
@@ -74,6 +101,25 @@ function Board(props) {
                         }
                     });
             }}>글쓰기</Button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
 
         </div>
     );
