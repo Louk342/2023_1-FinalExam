@@ -118,9 +118,9 @@ function DropMenu(props) {
   let content = null;
   if (props.mode == 'WELCOME') {
     content = 
-    <List sx={{ color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto',position:'absolute', zIndex:'5'}}>
-      <ListItemButton sx={{display:'inline'}} href='/profile' ><ListItemText primary={props.name} /></ListItemButton>
-      <ListItemButton sx={{display:'inline'}} onClick={() => {
+    <List sx={{ width:'100px',color: 'white', bgcolor: '#33353b', padding: '1px', boxShadow: '0 0 20px 0 rgba(0,0,0,.15)', display: 'fixed', top: '50px' ,left:'auto',position:'absolute', zIndex:'5'}}>
+      <ListItemButton href='/profile' ><ListItemText primary={props.name} /></ListItemButton>
+      <ListItemButton onClick={() => {
         fetch("http://louk342.iptime.org/logout", { //auth 주소에서 받을 예정
           method: "post", // method :통신방법
           headers: { "content-type": "application/json", },    // headers: API 응답에 대한 정보를 담음
