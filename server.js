@@ -175,7 +175,7 @@ app.post("/getPage", (req, res) => {
     });
 });
 
-app.post("/getProfilePage", (req, res) => {
+app.post("/getProfileBoard", (req, res) => {
     const name = req.body.name;
     db.query('SELECT * FROM page where writer=?',[name], function (error, result) {
         res.send(result);
