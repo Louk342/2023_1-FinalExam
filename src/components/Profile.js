@@ -12,7 +12,7 @@ function Profile(props) {
         const response = await fetch("http://louk342.iptime.org/getProfileBoard", {
             method: "post",
             headers: { "content-type": "application/json", },
-            body: JSON.stringify({ category: props.name }),
+            body: JSON.stringify({ name: props.name }),
         });
         const json = await response.json();
         const newList = json.map((content) => (
