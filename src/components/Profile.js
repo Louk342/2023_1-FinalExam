@@ -16,7 +16,7 @@ function Profile(props) {
         });
         const json = await response.json();
         const newList = json.map((content) => (
-            <tr key={content.id} onClick={{}}>
+            <tr key={content.id}>
                 <td>{content.id}</td>
                 <td>{content.title}</td>
                 <td>{content.writer}</td>
