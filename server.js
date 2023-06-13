@@ -175,6 +175,13 @@ app.post("/getPage", (req, res) => {
     });
 });
 
+app.post("/getProfilePage", (req, res) => {
+    const name = req.body.name;
+    db.query('SELECT * FROM page where writer=?',[name], function (error, result) {
+        res.send(result);
+    });
+});
+
 app.get('/page/:id',(req,res)=>{
     const ID=req.params.id;
     db.query('SELECT * FROM page where id=?',[ID], function (error, result) {

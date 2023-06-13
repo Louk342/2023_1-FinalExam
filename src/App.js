@@ -14,6 +14,7 @@ import Event from './components/Event';
 import Board from './components/board';
 import Write from './components/Write';
 import Page from './components/Page';
+import Profile from './components/Profile';
 function App(props) {
   const [mode, setMode] = useState('');
   const [name, setName] = useState('');
@@ -99,6 +100,7 @@ function App(props) {
             <Route path='/tip-board' element={<Board category={3}/>} />
             <Route path='/write' element={<Write/>} />
             <Route path='/page' element={<Page />}/>
+            <Route path='/page' element={<Profile name={name} />}/>
           </Routes></BrowserRouter>
         </div>
       </div>
