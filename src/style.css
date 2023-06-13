@@ -71,3 +71,35 @@ footer{
     padding: 30px;
     margin-top: 40px;
 }
+.container {
+    padding: 40px;
+  }
+  
+  .title {
+    float: left;
+    margin: 0px;
+  }
+  
+  .category-writer-container {
+    float: right;
+  }
+  
+  .category {
+    float: right;
+    margin: 30px;
+  }
+  
+  .writer {
+    float: right;
+    margin: 30px;
+  }
+  
+  .hr {
+    clear: both;
+    border-top: 1px solid #ccc;
+  }
+  
+  .content {
+    color: white;
+    width: 100%;
+  }

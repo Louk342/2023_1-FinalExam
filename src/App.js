@@ -99,7 +99,7 @@ function App(props) {
             <Route path='/clan-board' element={<Board category={2}/>} />
             <Route path='/tip-board' element={<Board category={3}/>} />
             <Route path='/write' element={<Write/>} />
-            <Route path='/page' element={<Page />}/>
+            <Route path='/page/:id' element={<Page />}/>
             <Route path='/profile' element={<Profile name={name} />}/>
           </Routes></BrowserRouter>
         </div>

@@ -24,7 +24,7 @@ function Profile(props) {
         });
         const json = await response.json();
         const newList = json.map((content) => (
-            <TableRow hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow onClick={() => {window.location.href = 'http://louk342.iptime.org/page/'+content.id}} hover sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component="th" scope="row"></TableCell>
                 <TableCell align="right">{content.id}</TableCell>
                 <TableCell align="right">{content.title}</TableCell>

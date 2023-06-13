@@ -167,22 +167,17 @@ app.post("/createBoard", (req, res) => {
 });
 
 app.post("/getPage", (req, res) => {
-    const id = req.body.id;
+    const id = req.body.input;
+    console.log('id : '+id);
     db.query('SELECT * FROM page where id=?',[id], function (error, result) {
-        res.send(result);
+        res.send(result[0]);
+        console.log(result[0]);
     });
 });
 
 app.post("/getProfileBoard", (req, res) => {
     const name = req.body.name;
     db.query('SELECT * FROM page where writer=?',[name], function (error, result) {
-        res.send(result);
-    });
-});
-
-app.get('/page/:id',(req,res)=>{
-    const ID=req.params.id;
-    db.query('SELECT * FROM page where id=?',[ID], function (error, result) {
         res.send(result);
     });
 });
